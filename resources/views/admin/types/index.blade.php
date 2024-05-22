@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Types</h1>
-    <a href="{{ route('admin.types.create') }}">Create a new technology</a>
+    <a href="{{ route('admin.types.create') }}">Create a new types</a>
     <table>
         <thead>
             <tr>
@@ -11,10 +11,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($types as $technology)
+            @foreach ($types as $type)
                 <tr>
-                    <td>{{ $technology->id }}</td>
-                    <td>{{ $technology->name }}</td>
+                    <td>{{ $type->id }}</td>
+                    <td>{{ $type->name }}</td>
                     <td>
                         <a href="{{ route('admin.types.show', $type->id) }}">View</a>
                         <a href="{{ route('admin.types.edit', $type->id) }}">Edit</a>
