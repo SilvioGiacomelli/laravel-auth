@@ -1,18 +1,22 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Projects</h1>
-    <a href="{{ route('admin.projects.create') }}">Create a new project</a>
-    <table>
+    <form class="d-flex" role="input" action="{{ route('admin.projects.create') }}">
+        <input class="form-control me-2" type="input" placeholder="New Project" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Send</button>
+    </form>
+
+    <table class="table">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Actions</th>
+            <tr scope="row">
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($projects as $project)
-                <tr>
+                <tr scope="row">
                     <td>{{ $project->id }}</td>
                     <td>{{ $project->title }}</td>
                     <td>
@@ -21,7 +25,7 @@
                         <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button>
+                            <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>

@@ -1,18 +1,22 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Types</h1>
-    <a href="{{ route('admin.types.create') }}">Create a new types</a>
-    <table>
+    <form class="d-flex" role="search" action="{{ route('admin.types.create') }}">
+        <input class="form-control me-2" type="input" placeholder="New Type" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Send</button>
+    </form>
+
+    <table class="table">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Actions</th>
+            <tr scope="row">
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($types as $type)
-                <tr>
+                <tr scope="row">
                     <td>{{ $type->id }}</td>
                     <td>{{ $type->name }}</td>
                     <td>
@@ -21,7 +25,7 @@
                         <form action="{{ route('admin.types.destroy', $type->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button>
+                            <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>

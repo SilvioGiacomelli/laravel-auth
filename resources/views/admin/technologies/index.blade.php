@@ -1,18 +1,22 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Technologies</h1>
-    <a href="{{ route('admin.technologies.create') }}">Create a new technology</a>
-    <table>
+    <form class="d-flex" role="input" action="{{ route('admin.technologies.create') }}">
+        <input class="form-control me-2" type="input" placeholder="New Technology" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Send</button>
+    </form>
+
+    <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Actions</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($technologies as $technology)
-                <tr>
+                <tr scope="row">
                     <td>{{ $technology->id }}</td>
                     <td>{{ $technology->name }}</td>
                     <td>
@@ -21,7 +25,7 @@
                         <form action="{{ route('admin.technologies.destroy', $technology->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button>
+                            <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
