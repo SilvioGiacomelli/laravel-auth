@@ -20,13 +20,15 @@
             <nav>
                 <ul>
                     <li>
-                        <i class="fa-solid fa-diagram-project"></i><a href="">Projects</a>
+                        <i class="fa-solid fa-diagram-project"></i><a
+                            href="{{ route('admin.projects.index') }}">Projects</a>
                     </li>
                     <li>
-                        <i class="fa-solid fa-hurricane"></i><a href="">Types</a>
+                        <i class="fa-solid fa-hurricane"></i><a href="{{ route('admin.types.index') }}">Types</a>
                     </li>
                     <li>
-                        <i class="fa-solid fa-microchip"></i><a href="">Technologies</a>
+                        <i class="fa-solid fa-microchip"></i><a
+                            href="{{ route('admin.technologies.index') }}">Technologies</a>
                     </li>
                 </ul>
         </aside>
