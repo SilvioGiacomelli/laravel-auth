@@ -39,7 +39,7 @@ class ProjectsController extends Controller
             $project->title = $request->title;
             $project->slug = Help::generateSlug($project->title, Project::class);
             $project->save();
-            return redirect()->route('admin.projects.index')->with('error', 'Project created');
+            return redirect()->route('admin.projects.index')->with('success', 'Project created');
         }
     }
 
@@ -77,7 +77,7 @@ class ProjectsController extends Controller
         if ($exists) {
             return redirect()->route('admin.projects.index')->with('error', 'Project already exists');
         } else {
-            $data['slug'] = Help::generateSlug($project->title, Project::class);
+            $data['slug'] = Help::generateSlug($request->title, Project::class);
             $project->update($data);
             return redirect()->route('admin.projects.index')->with('success', 'Project modified');
         }
