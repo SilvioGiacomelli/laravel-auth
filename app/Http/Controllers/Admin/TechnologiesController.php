@@ -62,9 +62,25 @@ class TechnologiesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Technology $technology)
     {
-        //
+        $data = $request->validate(
+            [
+                'title' => 'required|string',
+            ],
+            [
+                'title.required' => 'Title is required',
+                'title.string' => 'Title must be a string',
+            ]
+        );
+        $exists = Technology::where('title', $request->title)->first();
+        if ($exists) {
+            return redirect()->route('admin.technologies.index')->with('error', 'Technology already exists');
+        } else {
+            $data['slug'] = Help::generateSlug($technology->title, Technology::class);
+            $technology->update($data);
+            return redirect()->route('admin.technologies.index')->with('success', 'Technology modified');
+        }
     }
 
     /**

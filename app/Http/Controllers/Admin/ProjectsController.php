@@ -33,13 +33,13 @@ class ProjectsController extends Controller
     {
         $exists = Project::where('title', $request->title)->first();
         if ($exists) {
-            return redirect()->route('admin.projects.index')->with('message', 'Project already exists');
+            return redirect()->route('admin.projects.index')->with('error', 'Project already exists');
         } else {
             $project = new Project();
             $project->title = $request->title;
             $project->slug = Help::generateSlug($project->title, Project::class);
             $project->save();
-            return redirect()->route('admin.projects.index')->with('message', 'Project created');
+            return redirect()->route('admin.projects.index')->with('error', 'Project created');
         }
     }
 
@@ -62,9 +62,25 @@ class ProjectsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->validate(
+            [
+                'title' => 'required|string',
+            ],
+            [
+                'title.required' => 'Title is required',
+                'title.string' => 'Title must be a string',
+            ]
+        );
+        $exists = Project::where('title', $request->title)->first();
+        if ($exists) {
+            return redirect()->route('admin.projects.index')->with('error', 'Project already exists');
+        } else {
+            $data['slug'] = Help::generateSlug($project->title, Project::class);
+            $project->update($data);
+            return redirect()->route('admin.projects.index')->with('success', 'Project modified');
+        }
     }
 
     /**

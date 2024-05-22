@@ -37,6 +37,7 @@ class TypesController extends Controller
         } else {
             $type = new Type();
             $type->title = $request->title;
+
             $type->slug = Help::generateSlug($type->title, Type::class);
             $type->save();
             return redirect()->route('admin.types.index')->with('message', 'Type created');
@@ -62,9 +63,25 @@ class TypesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Type $type)
     {
-        //
+        $data = $request->validate(
+            [
+                'title' => 'required|string',
+            ],
+            [
+                'title.required' => 'Title is required',
+                'title.string' => 'Title must be a string',
+            ]
+        );
+        $exists = Type::where('title', $request->title)->first();
+        if ($exists) {
+            return redirect()->route('admin.types.index')->with('error', 'Type already exists');
+        } else {
+            $data['slug'] = Help::generateSlug($type->title, Type::class);
+            $type->update($data);
+            return redirect()->route('admin.types.index')->with('success', 'Type modified');
+        }
     }
 
     /**
