@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\Admin\ProjectsController;
+use App\Http\Controllers\Admin\TypesController;
+use App\Http\Controllers\Admin\TechnologiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,9 @@ route::middleware(['auth', 'verified'])
     ->group(function () {
         //qui dentro tutte le rotte che voglio proteggere
         route::get('/', [DashboardController::class, 'index'])->name('home');
+        route::resource('projects', ProjectsController::class);
+        route::resource('types', TypesController::class);
+        route::resource('technologies', TechnologiesController::class);
     });
 
 Route::middleware('auth')->group(function () {
