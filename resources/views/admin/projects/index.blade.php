@@ -1,8 +1,20 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Projects</h1>
-    <form class="d-flex" role="input" action="{{ route('admin.projects.create') }}">
-        <input class="form-control me-2" type="input" placeholder="New Project" aria-label="Search">
+    @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-green" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <form class="d-flex" role="input" action="{{ route('admin.projects.store') }}" method="POST">
+        @csrf
+        <input class="form-control me-2" name="title" type="input" placeholder="New Project" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Send</button>
     </form>
 

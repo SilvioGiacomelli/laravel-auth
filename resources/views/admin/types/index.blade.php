@@ -1,8 +1,19 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Types</h1>
-    <form class="d-flex" role="search" action="{{ route('admin.types.create') }}">
-        <input class="form-control me-2" type="input" placeholder="New Type" aria-label="Search">
+    @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-green" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+    <form class="d-flex" role="search" action="{{ route('admin.types.store') }}" method="POST">
+        @csrf
+        <input class="form-control me-2" name="title" type="input" placeholder="New Type" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Send</button>
     </form>
 
@@ -18,7 +29,7 @@
             @foreach ($types as $type)
                 <tr scope="row">
                     <td>{{ $type->id }}</td>
-                    <td>{{ $type->name }}</td>
+                    <td>{{ $type->title }}</td>
                     <td>
                         <a href="{{ route('admin.types.show', $type->id) }}">View</a>
                         <a href="{{ route('admin.types.edit', $type->id) }}">Edit</a>

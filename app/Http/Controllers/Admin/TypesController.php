@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Functions\Helper as Help;
 
 class TypesController extends Controller
 {
@@ -30,7 +31,16 @@ class TypesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $exists = Type::where('title', $request->title)->first();
+        if ($exists) {
+            return redirect()->route('admin.types.index')->with('message', 'Type already exists');
+        } else {
+            $type = new Type();
+            $type->title = $request->title;
+            $type->slug = Help::generateSlug($type->title, Type::class);
+            $type->save();
+            return redirect()->route('admin.types.index')->with('message', 'Type created');
+        }
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Technology;
+use App\Functions\Helper as Help;
 
 class TechnologiesController extends Controller
 {
@@ -30,7 +31,16 @@ class TechnologiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $exists = Technology::where('title', $request->title)->first();
+        if ($exists) {
+            return redirect()->route('admin.technologies.index')->with('message', 'Technology already exists');
+        } else {
+            $technology = new Technology();
+            $technology->title = $request->title;
+            $technology->slug = Help::generateSlug($technology->title, Technology::class);
+            $technology->save();
+            return redirect()->route('admin.technologies.index')->with('message', 'Technology created');
+        }
     }
 
     /**
