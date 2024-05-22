@@ -33,14 +33,14 @@ class TypesController extends Controller
     {
         $exists = Type::where('title', $request->title)->first();
         if ($exists) {
-            return redirect()->route('admin.types.index')->with('message', 'Type already exists');
+            return redirect()->route('admin.types.index')->with('error', 'Type already exists');
         } else {
             $type = new Type();
             $type->title = $request->title;
 
             $type->slug = Help::generateSlug($type->title, Type::class);
             $type->save();
-            return redirect()->route('admin.types.index')->with('message', 'Type created');
+            return redirect()->route('admin.types.index')->with('success', 'Type created');
         }
     }
 

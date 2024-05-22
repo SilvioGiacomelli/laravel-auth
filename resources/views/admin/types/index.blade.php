@@ -2,7 +2,7 @@
 @section('content')
     <h1>Types</h1>
     @if ($errors->any())
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-danger" role="alert">
             @foreach ($errors->all() as $error)
                 {{ $error }}
             @endforeach

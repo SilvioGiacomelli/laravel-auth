@@ -33,13 +33,13 @@ class TechnologiesController extends Controller
     {
         $exists = Technology::where('title', $request->title)->first();
         if ($exists) {
-            return redirect()->route('admin.technologies.index')->with('message', 'Technology already exists');
+            return redirect()->route('admin.technologies.index')->with('error', 'Technology already exists');
         } else {
             $technology = new Technology();
             $technology->title = $request->title;
             $technology->slug = Help::generateSlug($technology->title, Technology::class);
             $technology->save();
-            return redirect()->route('admin.technologies.index')->with('message', 'Technology created');
+            return redirect()->route('admin.technologies.index')->with('success', 'Technology created');
         }
     }
 
