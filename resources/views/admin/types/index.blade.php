@@ -38,7 +38,7 @@
                     <td>
                         <form action="{{ route('admin.types.update', $type) }}" method="POST"
                             id="form-types-{{ $type->id }}">
-                            @csrftypes
+                            @csrf
                             @method('PUT')
                             <input type="text" value="{{ $type->title }}" name="title">
                         </form>

@@ -89,6 +89,12 @@ class TypesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type = Type::find($id);
+        if ($type) {
+            $type->delete();
+            return redirect()->route('admin.types.index')->with('success', 'Type deleted successfully');
+        } else {
+            return redirect()->route('admin.types.index')->with('error', 'Type not found');
+        }
     }
 }

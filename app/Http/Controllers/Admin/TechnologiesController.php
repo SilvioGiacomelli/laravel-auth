@@ -88,6 +88,12 @@ class TechnologiesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $technology = Technology::find($id);
+        if ($technology) {
+            $technology->delete();
+            return redirect()->route('admin.technologies.index')->with('success', 'Technology deleted successfully');
+        } else {
+            return redirect()->route('admin.technologies.index')->with('error', 'Technology not found');
+        }
     }
 }
